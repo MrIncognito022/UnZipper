@@ -20,3 +20,20 @@
         @ViewBag.Message
     </div>
 }
+
+<script>
+    document.getElementById('zipFile').addEventListener('change', function (event) {
+        var fileInput = event.target;
+        var file = fileInput.files[0];
+        if (file) {
+            var newFileName = file.name.replace(/\s+/g, '');
+            var dataTransfer = new DataTransfer();
+            var newFile = new File([file], newFileName, { type: file.type });
+            dataTransfer.items.add(newFile);
+            fileInput.files = dataTransfer.files;
+
+            console.log("Original file name: " + file.name);
+            console.log("New file name: " + newFileName);
+        }
+    });
+</script>

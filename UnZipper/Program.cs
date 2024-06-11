@@ -2,13 +2,18 @@ using Microsoft.AspNetCore.Http.Features;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Limits.MaxRequestBodySize = 209715200; // 200 MB
+});
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Optional: Configure file upload size limit (100 MB in this case)
+// Configure file upload size limit (200 MB in this case)
 builder.Services.Configure<FormOptions>(options =>
 {
-    options.MultipartBodyLengthLimit = 104857600; // 100 MB
+    options.MultipartBodyLengthLimit = 209715200; // 200 MB
 });
 
 var app = builder.Build();
